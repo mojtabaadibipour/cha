@@ -1,0 +1,21 @@
+workflows:
+  android-build:
+    name: Android Build
+    instance_type: mac_mini_m1 # یا یک instance_type دیگر بر اساس نیاز
+    max_build_duration: 120 # مدت زمان مجاز برای بیلد (به دقیقه)
+    environment:
+      flutter: stable # یا نسخه مورد نظر Flutter
+      android_signing_key: # (اختیاری) برای امضای APK
+        secure: YOUR_SECURE_ANDROID_SIGNING_KEY
+      keystore_password: # (اختیاری) رمز عبور Keystore
+        secure: YOUR_SECURE_KEYSTORE_PASSWORD
+      key_alias: # (اختیاری) نام مستعار کلید
+        secure: YOUR_SECURE_KEY_ALIAS
+      key_password: # (اختیاری) رمز عبور کلید
+        secure: YOUR_SECURE_KEY_PASSWORD
+    scripts:
+      - name: Flutter Build
+        script: |
+          flutter build apk --split-per-abi
+    artifacts:
+      - build/app/outputs/flutter-apk/*.apk
